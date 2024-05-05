@@ -1,0 +1,107 @@
+<div class="outerBox " *ngIf="!toggleRating">
+    <div style="margin-top: 70px;" *ngFor="let dtt of previousSearch">
+        <div class="row">
+            <div class="IconCard">
+                <div ><span><i class="fa fa-user" style="font-size:20px"></i></span></div>
+            </div>
+            <div class="mainCard2">
+                {{dtt.req}}
+            </div>
+           </div>
+           <br>
+           <div class="row">
+            <div class="IconCard">
+                <div >
+                    <span class="fit new" id="task" >
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-md"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.7929 2.79289C18.0118 1.57394 19.9882 1.57394 21.2071 2.79289C22.4261 4.01184 22.4261 5.98815 21.2071 7.20711L12.7071 15.7071C12.5196 15.8946 12.2652 16 12 16H9C8.44772 16 8 15.5523 8 15V12C8 11.7348 8.10536 11.4804 8.29289 11.2929L16.7929 2.79289ZM19.7929 4.20711C19.355 3.7692 18.645 3.7692 18.2071 4.2071L10 12.4142V14H11.5858L19.7929 5.79289C20.2308 5.35499 20.2308 4.64501 19.7929 4.20711ZM6 5C5.44772 5 5 5.44771 5 6V18C5 18.5523 5.44772 19 6 19H18C18.5523 19 19 18.5523 19 18V14C19 13.4477 19.4477 13 20 13C20.5523 13 21 13.4477 21 14V18C21 19.6569 19.6569 21 18 21H6C4.34315 21 3 19.6569 3 18V6C3 4.34314 4.34315 3 6 3H10C10.5523 3 11 3.44771 11 4C11 4.55228 10.5523 5 10 5H6Z" fill="currentColor"></path></svg>
+                       </span> 
+                    </div>
+            </div>
+    
+            
+            <div class="mainCard">
+                {{dtt.res}}
+            </div>
+             
+            </div>
+           <br><br>
+       </div>
+
+    <div class="toolBar">
+        <div></div>
+        <div class="box3 px-3 py-1" (click)="togglePanel()">
+            <span class="px-1"><i [ngClass]="toggleUp?'fa fa-eye px-1':'fa fa-eye-slash px-2'"></i>{{toggleUp?"Show draft":"Hide draft"}}</span>
+            <span   *ngIf="toggleUp"><i class="fa fa-angle-down"  aria-hidden="true" style="font-size:20px"> </i></span>
+            <span  *ngIf="!toggleUp"><i class="fa fa-angle-up" aria-hidden="true" style="font-size:20px"> </i></span>
+        </div>
+    </div>
+    <div class="innerBox1 " *ngIf="!toggleUp">
+        <div class="boxCard" *ngFor="let item of queryDraft, let index = index">
+            <span class="p-1 draft">{{"Drafts"+ " " + (index+1)}}</span>
+            <div class="p-1" (click)="getContent(item)">
+                {{truncateMsg(item)}}
+            </div>
+        </div>
+    </div>
+    <div class="innerBox2">
+        <div  class="rating"><i (click)="toggleRatings()"class="fa fa-thumbs-up" style="font-size:36px"></i></div>     
+        <div class="row">
+        <div class="IconCard">
+            <div ><span><i  class="fa fa-user" style="font-size:20px"></i></span></div>
+        </div>
+        <div class="mainCard2">
+            {{selectedContent.req}}
+        </div>
+       </div>
+       <br>
+       <div class="row">
+        <div class="IconCard">
+            <div >
+                <span class="fit new" id="task" >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-md"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.7929 2.79289C18.0118 1.57394 19.9882 1.57394 21.2071 2.79289C22.4261 4.01184 22.4261 5.98815 21.2071 7.20711L12.7071 15.7071C12.5196 15.8946 12.2652 16 12 16H9C8.44772 16 8 15.5523 8 15V12C8 11.7348 8.10536 11.4804 8.29289 11.2929L16.7929 2.79289ZM19.7929 4.20711C19.355 3.7692 18.645 3.7692 18.2071 4.2071L10 12.4142V14H11.5858L19.7929 5.79289C20.2308 5.35499 20.2308 4.64501 19.7929 4.20711ZM6 5C5.44772 5 5 5.44771 5 6V18C5 18.5523 5.44772 19 6 19H18C18.5523 19 19 18.5523 19 18V14C19 13.4477 19.4477 13 20 13C20.5523 13 21 13.4477 21 14V18C21 19.6569 19.6569 21 18 21H6C4.34315 21 3 19.6569 3 18V6C3 4.34314 4.34315 3 6 3H10C10.5523 3 11 3.44771 11 4C11 4.55228 10.5523 5 10 5H6Z" fill="currentColor"></path></svg>
+                   </span>            </div>
+        </div>
+
+        <div class="mainCard" *ngIf="state">
+            <div class="d-flex "  >
+                <div class="spinner-border text-primary"  style="height: 10px; width:10px"
+                id="spinner" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+              </div>
+        </div>
+        
+        <div class="mainCard" style="white-space: pre-line" *ngIf="!state">
+            {{selectedContent.res}}
+            
+            <br>
+            <p>
+                <i class="feather feather-copy" style="font-size: 20px;"></i>
+            </p>
+        </div>
+
+        <div>
+
+        </div>
+
+        <div class="mt-2 search" *ngIf="ref!='rating'" >
+            <div class="input-group">
+              <input id="description" name="description" type="search" class="form-control rounded border-left-0" (keyup.enter)="toggleRes()" [(ngModel)]="specific" [ngModelOptions]="{standalone: true}" placeholder="Message Smart LangEasy" pattern="[a-zA-Z0-9 ]*">
+              <div class="input-group-prepend" (click)="toggleRes()">
+                <span class="input-group-text bg-light border-left-0"><i class="fa fa-search"></i></span>
+              </div>
+            </div>
+          </div>
+         
+        </div>
+        <br><br>
+
+    </div>
+</div>
+<div class="outerBox2 " *ngIf="toggleRating">
+    <div class="innerBox2">
+        <div  class="rating"><i (click)="toggleRatings()"class="fa fa-times" style="font-size:36px"></i></div>    
+    <br>
+    </div>
+</div>
+<app-rating [Category]="Category" [res]="ref!='rating'?selectedContent.res:queryDraft" [ref]="ref" [req]="reqText" class="outerBox" *ngIf="toggleRating" (modalsave)="resp()"></app-rating>

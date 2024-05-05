@@ -1,0 +1,29 @@
+.drafts{
+    background: #e3e3e3;
+    border-radius: 9%;
+    margin-right: 4px;
+    width: fit-content;
+}
+.opt{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    width:100%;
+    border:1px solid black
+
+}
+.fit{
+    width: fit-content;
+    }
+    .con{
+        width: 500px;
+        margin:auto
+    }
+
+    .indicator{
+        width: 12px;
+        height: 12px;
+    }
+    .indicatorLabel{
+        font-size: 9px;
+    }
