@@ -1,0 +1,110 @@
+.toolBar{
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    /* margin-top: 20px; */
+}
+ 
+.toolBar span{
+    background: #e3e3e3;
+    border-radius:5px;
+}
+ 
+.box3{
+    background: #e3e3e3;
+}
+.search{
+    position: absolute;
+    top: 80vh;
+    width: 55%;
+    margin: auto ;
+}
+.boxCard{
+    width:200px;
+    height: 150px;
+    font-size: 11px;
+    padding: 6px;
+    background-color:#f0f0f5;
+    margin-right:3px;
+    /* background-color:#e6f2ff #83c0ff; */
+ 
+}
+
+
+
+.draft{
+    background: #e3e3e3;
+    border-radius: 9%;
+ 
+}
+.innerBox1{
+    margin-top: 10px;
+    display: flex;
+    justify-content: start;
+}
+.innerBox2{
+ width:100%;
+ padding:10px;
+}
+.activeBox{
+ background-color:  #99d6ff;
+}
+.draftACtive{
+    background: #0099ff;
+}
+ 
+.mainCard,.mainCard2{
+    width:95%
+}
+.mainCard2{
+ margin-top: 2px;
+ 
+}
+
+.IconCard{
+    padding-left: 5px;
+}
+.input-group-prepend,.input-group-text, input{
+    height: 50px;
+    }
+
+.IconCard{
+    width:5%
+}
+.rating{
+    text-align: right;
+}
+.rating i{
+   cursor: pointer;
+}
+ 
+.Icon2, .Icon3{
+    width:40px;
+    height: 40px;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 100%;
+    background-color: red;
+    padding: auto;
+    font-weight: 500;
+    font-size: 22px;
+    color: white;
+ 
+}
+.Icon3{
+    background-color: #000099;  
+}
+.IconCard{
+    padding-left: 5px;
+}
+
+.outerBox, .outerBox2{
+    padding: 15px;
+    height: 75vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.outerBox2{
+    height: 10vh;
+    overflow: hidden;
+}

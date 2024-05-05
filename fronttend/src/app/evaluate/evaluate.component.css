@@ -1,0 +1,109 @@
+.layout{
+    display: flex;
+    flex-direction: row;
+    vertical-align: middle;
+    align-items: center;
+    }
+    .sidePane{
+    width:250px;
+    min-height: 99vh;
+    overflow: auto;
+    border-right: 1px solid #e3e3e3;;
+    padding: 15px;
+    background: #e3e3e3;
+    }
+    .innerSideContainer{
+    color: black;
+    min-height: 70vh;
+    }
+    .mainPane{
+    width: 80%;
+    height: 99vh;
+    overflow: auto;
+    }
+    .fit{
+    width: fit-content;
+    }
+    .noMarginLeft{
+        padding-left: 0px;
+        margin-left: 0px;
+    }
+    .noMarginRight{
+        padding-right: 0px;
+        margin-right: 0px;
+    }
+    .noMargin{
+        padding-right: 0px;
+        margin-right: 0px;
+        padding-left: 0px;
+        margin-left: 0px;
+    }
+    .togglePane, .new{
+        cursor: pointer;
+    
+    }
+    
+    .sidePaneSlim{
+    width:40px;
+    height: 99vh;
+    overflow: auto;
+    border-right: 1px solid #e3e3e3;
+    padding: 5px;
+    cursor: pointer;
+    background: #e3e3e3;
+    
+    }
+    .marginTop{
+        margin: auto;
+        margin-top: 60px;
+        margin-left:2px ;
+    }
+ 
+    .sidePane li{
+        list-style: none;
+    }
+    .menuBlock{
+    padding: 5px;
+    
+    }
+    
+    .box{
+      
+    }
+    .box :hover{
+        transform: scale(1.8,1.8);
+        
+    }
+    .box2, .box3{
+      width:800px;
+      /* height:500px; */
+      margin: auto;
+      margin-top: 20px;
+    }
+    .box2 h2{
+      text-align: center;
+    }
+    .box2 i{
+        margin: auto;
+      }
+    input{
+        width:70%;
+        justify-content: center;
+        margin: auto;
+    }
+    .logo{
+    justify-content: center;
+    margin: auto;
+    text-align: center;
+    }
+    .input-group-prepend,.input-group-text, input{
+    height: 50px;
+    }
+    .box3{
+        margin-top: 200px;
+      }
+
+      .footer{
+        /* position: relative; */
+        bottom: 0;
+      }

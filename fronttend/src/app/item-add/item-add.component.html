@@ -1,0 +1,56 @@
+<!-- <app-nav></app-nav> -->
+
+<div class="container">
+    <div class="row">
+                <div class="col-6 mx-auto vh-50 border border-warning mt-2 rounded-end" style="background-color:">
+                <div class="px-3">
+                    <h5 class="card-title ">Expense Form</h5>
+                    <p class="card-text text-danger">Add New Record to Expense Manager (Reactive Form)</p>
+                </div>
+                
+                <form [formGroup]="requiredForm"  (ngSubmit)="AddItem( requiredForm.value )">
+                <div class="form-group">
+                     <!-- <label class="center-block col-12">ID:
+                                     <input class="form-control " formControlName="id">
+                        </label><br> -->
+                        <label class="center-block col-12 text-primary">ITEM:
+                                     <input class="form-control " formControlName="item">
+                        </label><br>
+                         <label class="center-block col-12 text-primary">CATEGORY:
+                                     <input class="form-control" formControlName="category" >
+                        </label><br>
+                         <label class="center-block col-12 text-primary">AMOUNT:
+                                     <input class="form-control" type="number" formControlName="amount">
+                        </label><br>
+                         <label class="center-block col-12 text-primary">LOCATION:
+                                     <input class="form-control" formControlName="location">
+                        </label><br>
+                         <label class="center-block col-12 text-primary">SPEND ON:
+                                     <input class="form-control"  type="date" formControlName="spendOn"   >
+                        </label><br>
+                         
+                        <div class="text-center">
+                            <button class="btn btn-primary col-4"> Add Record</button>&nbsp;&nbsp;
+                            <button class="btn btn-danger col-4" (click)="goBack()"> Cancel</button>
+
+                        </div>
+                        
+                </div>
+                <div *ngIf="requiredForm.controls['item'].invalid && requiredForm.controls['item'].touched" class="alert alert-danger">
+                    <div *ngIf="requiredForm.controls['item'].errors">All form fields are required.</div>
+                </div>
+                </form>
+               <p class="alert alert-danger text-primary">Form value: {{ requiredForm.value | json }}</p>
+               <p class="alert alert-danger text-primary">Form status: {{ requiredForm.status | json }}</p>
+            
+            </div>
+    </div>
+</div>
+   
+
+
+
+
+
+
+    

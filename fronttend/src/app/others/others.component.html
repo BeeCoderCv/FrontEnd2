@@ -1,0 +1,51 @@
+<!-- <app-nav></app-nav> -->
+
+
+<div class="container">
+ <div class="row">
+ <div class="col-lg-12 text-center" style="padding-top: 20px;">
+ <div class="container" style="padding-left: 0px; padding-right: 0px;">
+ <div class="row">
+ <div class="col-sm" style="text-align: left; color:chocolate;font-weight: bolder;">
+ {{ title }}
+ </div>
+<div class="col-sm" style="text-align: right;">
+ <button type="button" class="btn btn-primary" routerLink="/add"> Add</button>
+ </div>
+ </div>
+ </div>
+ <div class="container box" style="margin-top: 10px;">
+ <table class="table table-striped">
+ <thead>
+ <tr>
+ <th>Item</th>
+<th>Amount</th>
+<th>Category</th>
+<th>Location</th>
+<th>Spent On</th>
+<th>View</th>
+<th>Delete</th>
+ </tr>
+ </thead>
+<tbody>
+ <tr *ngFor="let entry of expenseEntries">
+ <th scope="row">{{ entry.item }}</th>
+<th  *ngIf = " ( entry.amount % 2==0); else secondColor   " [style.color]="colorRed">
+    {{ entry.amount | currency:'EUR' }}
+</th>
+<ng-template  #secondColor  >
+<th [style.color]="colorBlue">{{ entry.amount | currency:'EUR'}}</th>
+</ng-template>
+ <td>{{ entry.category }}</td>
+ <td>{{ entry.location }}</td>
+ <td>{{ entry.spendOn | date: 'short' }}</td> 
+ <td ><button routerLink="../expenses/detail/{{ entry.id }}" class="btn bg-primary text-white"><b>View</b></button></td>
+ <td><button  (click)= "delete( entry.id )"  class="btn bg-danger text-white"><b>Delete</b></button></td>
+<!-- <td>{{ entry.spendOn  }}</td>  -->
+ </tr>
+ </tbody>
+ </table>
+ </div>
+ </div>
+ </div>
+</div>

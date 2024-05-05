@@ -1,0 +1,87 @@
+<!-- Page Content -->
+<!-- <app-nav></app-nav> -->
+
+<div class="row m-2">
+    <div class=" bg-primary col-5 " style="height: 300px; width: auto;">
+
+        <p [class]="myCSSClass">This paragraph class comes from *myClass* property </p>
+        <p [class.colorBlue]="applyCSSClass">This paragraph class does not apply</p>
+        <p [style.color]="myColor">This style.color (red) set a single property to this div</p>
+        <p [ngStyle]="myStyle">This style.color (red) set a single property to this div</p>
+        <br>
+        <input type="text" [(ngModel)]="userName">
+        <p>Two way binding! Hello {{ userName }}!</p>
+    
+    
+    </div>
+
+    <div class="col-7 bg-secondary">
+        <input type="text" [value]="userName"> One way binding  {{ userName }}
+        <h2>Event Binding</h2>
+        <button type="button" class="btn-primary"  (click)="showData($event)">Click here</button> 
+
+    </div>
+</div>
+
+
+<div class="container  bg-warning mt-2">
+    <div class="row">
+    <div class="col-lg-12 text-center" style="padding-top: 20px;">
+    <div class="container" style="padding-left: 0px; 
+   padding-right: 0px;">
+    <div class="row">
+   <div class="col-sm" style="text-align: left;">
+    {{ title }}
+    </div>
+    <div class="col-sm" style="text-align: right;">
+    <button type="button" 
+   class="btn btn-primary">Edit</button>
+</div>
+</div>
+</div>
+<div class="container box" style="margin-top: 10px;">
+<div class="row">
+<div class="col-2" style="text-align: right;">
+<strong><em>Item:</em></strong>
+</div>
+<div class="col" style="text-align: left;">
+{{ expenseEntry.item }} 
+</div>
+</div>
+<div class="row">
+<div class="col-2" style="text-align: right;">
+<strong><em>Amount:</em></strong>
+</div>
+<div class="col" style="text-align: left;">
+{{ expenseEntry.amount }} 
+</div>
+</div>
+<div class="row">
+<div class="col-2" style="text-align: right;">
+<strong><em>Category:</em></strong>
+</div>
+<div class="col" style="text-align: left;">
+{{ expenseEntry.category }} 
+</div>
+</div>
+<div class="row">
+<div class="col-2" style="text-align: right;">
+<strong><em>Location:</em></strong>
+</div>
+<div class="col" style="text-align: left;">
+{{ expenseEntry.location }} 
+</div>
+</div>
+<div class="row">
+<div class="col-2" style="text-align: right;">
+<strong><em>Spend On:</em></strong>
+
+</div>
+<div class="col" style="text-align: left;">
+{{ expenseEntry.spendOn }} 
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
