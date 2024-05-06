@@ -157,7 +157,7 @@ const g =[
 //   "domain tople": "assistance"
 // }
 //uploadFile(bucketName, h, 'Evaluations');
-uploadFile(bucketName, g, 'Ranking');
+//uploadFile(bucketName, g, 'Ranking');
 //uploadFile(bucketName, 'evaluation.json', 'Evaluations');
 
 
