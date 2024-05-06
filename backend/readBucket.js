@@ -33,7 +33,7 @@ console.log("Bucket Found")
    
  Files.forEach(async p=>{
   console.log(p.name)
-  if(p.name.toString()=='Ranking/'){
+  if(p.name.toString()=='Evaluations'){
     const [fileContent] = await p.download(); 
     console.log('File content:', 
     fileContent.toString());
