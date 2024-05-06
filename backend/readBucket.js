@@ -29,7 +29,7 @@ Files.forEach(file => {
 console.log('Folders in the bucket:', Array.from(folders));
 console.log("Bucket Found")
 //Download the file as a bufferconst 
- const [fileContent] = await Files[1].download();    
+ const [fileContent] = await Files[0].download();    
  console.log('File content:', 
  fileContent.toString());
  return Files?Files:""
