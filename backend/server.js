@@ -4,6 +4,15 @@ var db = require("./sqlitedb.js");
 var cloud= require("./readBucket.js");
 var app = express();
 app.use(cors());
+const corsOptions = {
+  origin: 'https://frontend-llm-tk7ash3eaa-uc.a.run.app/',
+  methods: 'GET,POST',
+  allowedHeaders: 'Content-Type,Authorization',
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors()); // Enable preflight requests for all routes
+
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

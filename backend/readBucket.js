@@ -51,6 +51,7 @@ async function uploadFile(bucketName, filePath, destinationFileName) {
       let existingData 
       const exists= doesFileExist(bucketName, destinationFileName)
       .then(async (exists) => {
+        try {
           if (exists){
             console.log("wrong...............entered")
            const file = await bucket.file(destinationFileName);
@@ -79,12 +80,15 @@ async function uploadFile(bucketName, filePath, destinationFileName) {
         }else{
           upload="evaluation.json";
         }
-    
+    console.log(upload)
       const file =bucket.file(upload);
       await file.save(JSON.stringify(filePath));
-      console.log(JSON.stringify(filePath))
-      console.log(`File ${fileName} exists in bucket ${bucketName}.`);
+      console.log(`File has been uploaded`);
         }
+        } catch (err) {
+          console.error('Error creating file:', err);
+        }
+   
       })
       .catch((err) => {
         console.error('Error:', err);
