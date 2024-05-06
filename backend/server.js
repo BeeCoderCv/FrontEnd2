@@ -166,7 +166,7 @@ app.post("/api/postRankingToCloud/", async (req, res, next) => {
 
   var data = req.body;
   try{
-    await cloud.uploadFile(bucketName, data, 'Ranking');
+    await cloud.uploadFile(bucketName, data, 'Ranking/');
     res.json({ status: 'success', message: 'API call successful' });
   }catch(err){
     res.status(400).json({ error: err.message });

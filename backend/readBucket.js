@@ -19,19 +19,28 @@ const bucket = storage.bucket(bucketName);
 const folders = new Set();
 const [Files]=await bucket.getFiles();
 Files.forEach(file => {
-    const parts = file.name.split('/');
-    if (parts.length > 1) {
+   // const parts = file.name.split('/');
+   // if (parts.length > 1) {
       // Extract folder name
-      folders.add(parts[0]);
-    }
+      //folders.add(parts[0]);
+   // }
+   folders.add(file.name);
   });
 
 console.log('Folders in the bucket:', Array.from(folders));
 console.log("Bucket Found")
 //Download the file as a bufferconst 
- const [fileContent] = await Files[0].download();    
- console.log('File content:', 
- fileContent.toString());
+   
+ Files.forEach(async p=>{
+  console.log(p.name)
+  if(p.name.toString()=='Ranking/'){
+    const [fileContent] = await p.download(); 
+    console.log('File content:', 
+    fileContent.toString());
+  }
+
+ })
+
  return Files?Files:""
 }catch (parseError) {
   console.error('Error parsing JSON data:', parseError);
@@ -55,35 +64,40 @@ async function uploadFile(bucketName, filePath, destinationFileName) {
           if (exists){
             console.log("wrong...............entered")
            const file = await bucket.file(destinationFileName);
-           final=file;
             const [file1] = await file.download();
              // Parse the existing JSON data
-            existingData =  JSON.parse(file1.toString());
-            console.log("existing data....."+JSON.stringify(existingData))
+             existingData=file1
+            console.log("existing data....."+existingData)//,existingData.length,!existingData)
             if(existingData&&existingData.length>=0){
+              existingData =  JSON.parse(file1.toString());
              // Add new data to the existing JSON array
              existingData.push(filePath);
             }
              else
-            existingData={"l":"l"}
+            existingData=[]
             console.log("ene data....."+JSON.stringify(existingData))
               // Convert the modified data back to JSON string
           const modifiedJson = JSON.stringify(existingData);
            await file.save(modifiedJson);
           
-          console.log(`File ${fileName} exists in bucket ${bucketName}.`);
+          console.log(`File saved in bucket ${bucketName} Succesfully.`);
         } else {
           console.log("file not exist")
         var upload='';
-        if(destinationFileName=="Ranking"){
+        if(destinationFileName=="Ranking/"){
           upload="ranking.json";
         }else{
           upload="evaluation.json";
         }
     console.log(upload)
       const file =bucket.file(upload);
-      await file.save(JSON.stringify(filePath));
-      console.log(`File has been uploaded`);
+  try{
+    await file.save(JSON.stringify(filePath));
+    console.log(`File has been uploaded`);
+  }catch(er){
+    console.log(`Failed to upload`);
+  }
+     
         }
         } catch (err) {
           console.error('Error creating file:', err);
@@ -93,9 +107,6 @@ async function uploadFile(bucketName, filePath, destinationFileName) {
       .catch((err) => {
         console.error('Error:', err);
       });
-      
-
-   
   }
 
   
@@ -120,22 +131,22 @@ async function doesFileExist(bucketName, fileName) {
   }
 }
 //   Example usage
-const g =[
-  {
-    "system prompt": "Your a helpful assistant,Your task is to manage customer querry information. provide as accurate information as possible",
-    "question prompt": "Hello assistant, my name is John, I am having trouble purchasing my flight, what might bethe problem?",
-    "assistant response": [
-        "Hello John, sorry that your facing such problem, could you confirm if your network is active?",
-        "Hey John, check your internet connection to see if it is working, and let me know."
-    ],
-    "ranks": [
-        5,
-        2
-    ],
-    "alternative response": "None",
-    "domain topic": "assistance"
-}
-]
+// const g =
+//   {
+//     "system prompt": "Your a helpful assistant,Your task is to manage customer querry information. provide as accurate information as possible",
+//     "question prompt": "Hello assistant, my name is John, I am having trouble purchasing my flight, what might bethe problem?",
+//     "assistant response": [
+//         "Hello John, sorry that your facing such problem, could you confirm if your network is active?",
+//         "Hey John, check your internet connection to see if it is working, and let me know."
+//     ],
+//     "ranks": [
+//         5,
+//         2
+//     ],
+//     "alternative response": "None",
+//     "domain topic": "assistance"
+// }
+
 // const h={
 //   "system prompt": "Your a helpful assistant, Your task is to manage customer querry information. provide as accurate information as possible.",
 //   "question prompt": "Hello assistant, my name is. John,I am having trouble purchasing my flight, what might be the problem?",
@@ -157,7 +168,7 @@ const g =[
 //   "domain tople": "assistance"
 // }
 //uploadFile(bucketName, h, 'Evaluations');
-//uploadFile(bucketName, g, 'Ranking');
+//uploadFile(bucketName, g, 'Ranking/');
 //uploadFile(bucketName, 'evaluation.json', 'Evaluations');
 
 
