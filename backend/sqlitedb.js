@@ -7,7 +7,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
  }
  else{ 
             console.log('Connected to the SQLite database.')
-            db.run(`CREATE TABLE expense (
+            db.run(`CREATE TABLE IF NOT EXISTS expense (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             item text, 
             amount real, 

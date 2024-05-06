@@ -41,7 +41,7 @@ Files.forEach(file => {
     }
   });
 
-  console.log('Folders in the bucket:', Array.from(folders));
+ // console.log('Folders in the bucket:', Array.from(folders));
 console.log("Bucket Found")
 //Download the file as a bufferconst 
  const [fileContent] = await Files[0].download();    
@@ -60,7 +60,8 @@ async function uploadFile(bucketName, filePath, destinationFileName) {
     const bucket = storage.bucket(bucketName);
     //const file = bucket.file(destinationFileName); 
     const timestamp = new Date().getTime(); // Example: Using timestamp as part of the object name
-    const objectName = ""+destinationFileName+"/object_"+timestamp+".json";
+    //const objectName = ""+destinationFileName+"/object_"+timestamp+".json";
+    const objectName = destinationFileName; 
     const file = bucket.file(objectName);     
     await file.save(JSON.stringify(filePath));
     try {
