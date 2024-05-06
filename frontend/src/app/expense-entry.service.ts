@@ -25,7 +25,7 @@ export class ExpenseEntryService {
   
         //fetch data from the json API
         private expenseRestUrl = this.appconfigService.API_BASE+"/api/expense"//'http://localhost:8000/api/expense';
-        private expenseRestUrl2 = this.appconfigService.API_BASE+"/api/postEvaluationToCloud"//'http://localhost:8000/api/postEvaluationToCloud';
+        private expenseRestUrl2 = this.appconfigService.API_BASE+"/api/postEvaluationToCloud"//'https://backend-llm-tk7ash3eaa-uc.a.run.app/api/postEvaluationToCloud'//this.appconfigService.API_BASE+"/api/postEvaluationToCloud"//'http://localhost:8000/api/postEvaluationToCloud';
         private expenseRestUrl3 = this.appconfigService.API_BASE+"/api/postRankingToCloud"//'http://localhost:8000/api/postRankingToCloud';
         private expense344 = this.appconfigService.API_BASE+"/api/expense"//'http://localhost:8000/api/expense';
       
