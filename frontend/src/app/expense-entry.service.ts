@@ -27,7 +27,7 @@ export class ExpenseEntryService {
         private expenseRestUrl = this.appconfigService.API_BASE+"/api/expense"//'http://localhost:8000/api/expense';
         private expenseRestUrl2 = this.appconfigService.API_BASE+"/api/postEvaluationToCloud"//'https://backend-llm-tk7ash3eaa-uc.a.run.app/api/postEvaluationToCloud'//this.appconfigService.API_BASE+"/api/postEvaluationToCloud"//'http://localhost:8000/api/postEvaluationToCloud';
         private expenseRestUrl3 = this.appconfigService.API_BASE+"/api/postRankingToCloud"//'http://localhost:8000/api/postRankingToCloud';
-        private expense344 = this.appconfigService.API_BASE+"/api/expense"//'http://localhost:8000/api/expense';
+        private expense344 = this.appconfigService.API_BASE+"/success"//'http://localhost:8000/api/expense';
       
         //postRankingToCloud    
 
@@ -46,6 +46,13 @@ export class ExpenseEntryService {
          data)
           //.pipe(retry(3),catchError(this.httpErrorHandler) );
          }
+
+
+         get1() : Observable<any> {
+          console.log(this.expense344)
+          return this.httpClient.get<any>(this.expense344)
+         //.pipe(catchError(this.httpErrorHandler));
+          }
 
         //get Method to fetch data from URL
         

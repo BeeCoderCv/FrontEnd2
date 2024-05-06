@@ -64,7 +64,7 @@ checkList=Object.keys(this.model.metrics);
 counter:number=0;
   ngOnInit(): void {
     this.model=this.ref == "rating"?this.rank:this.model;
-    console.log(this.model)
+   // console.log(this.model)
     this.model['question prompt']=this.req;
     this.model['assistant response']=this.res;
     this.ref == "rating"?this.model["domain topic"]=this.Category:this.model['domain tople']=this.Category; 
@@ -73,7 +73,16 @@ counter:number=0;
       this.Evaluation = this.Ranking
       console.log(this.Category)
     }
+    this.getServerResponse2()
   }
+  getServerResponse2() {
+    this._test.get1()
+    .subscribe( data => 
+      
+      console.log( data)
+     );
+    
+   }
   indicator: any = [
     {
       value: "1",
@@ -521,8 +530,7 @@ dikp? this.rankingData=null:""
     // this.nextPrev(-1)
   }
   save1() {
-
-    this.isSubmitted = false
+  this.isSubmitted = false
     this.disablePrev = false;
     if (this.validateForm()) {
       this.ref == "rating"?this.model.ranks=[this.rankingData]:"";
@@ -532,12 +540,13 @@ if(this.ref == "rating"){
       this.isSubmitted = true
       this.disablePrev = true;
 
-     }, error => {
-      console.log(this.model)
-      this.isSubmitted = true
-      this.disablePrev = true;
-       console.log(error)
-          }
+     }
+    //  , error => {
+    //   console.log(this.model)
+    //   this.isSubmitted = true
+    //   this.disablePrev = true;
+    //    console.log(error)
+    //       }
      )
     }
     else{
@@ -546,17 +555,17 @@ if(this.ref == "rating"){
        this.isSubmitted = true
        this.disablePrev = true;
      }, 
-     error => {
-      console.log(this.model)
-      this.isSubmitted = true
-      this.disablePrev = true;
-       console.log(error)
-          }
+    //  error => {
+    //   console.log(this.model)
+    //   this.isSubmitted = true
+    //   this.disablePrev = true;
+    //    console.log(error)
+    //       }
      )
     }
-    console.log(this.model)
-       this.isSubmitted = true
-       this.disablePrev = true;
+    // console.log(this.model)
+    //    this.isSubmitted = true
+    //    this.disablePrev = true;
   }
      else
       this.disableBtn = false;
