@@ -67,7 +67,7 @@
                          
                           <input type="radio" checked="checked" [name]="'radio2'+index" [value]="itm.view==1?item.value:item.indication" class="form-control ele"
                             [(ngModel)]='
-                            true?this.model.metrics.toxicity
+                            itm.ranking=="toxicity"?this.model.metrics.toxicity
                             :itm.ranking=="Truthfulness"?this.model.metrics.truthfulness
                             : itm.ranking=="Coherence"?this.model.metrics.coherrence
                             : itm.ranking=="Fairness"?this.model.metrics.fairness
