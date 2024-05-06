@@ -41,7 +41,7 @@ rank:any={
   "question prompt": "",
   "assistant response": [],
   "ranks": [],
-  "alternative response": "None",
+  "alternative response": "",
   "domain topic": ""
 }
   data = [
@@ -61,7 +61,7 @@ rank:any={
     '#66FF00', '#66FF33', '#CCFF33', '#FFFF33', '#FFCC33', '#FF9933', '#FF6633', '#FF3333', '#FF3300', '#FF0033'
   ]
 checkList=Object.keys(this.model.metrics);
-
+counter:number=0;
   ngOnInit(): void {
     this.model=this.ref == "rating"?this.rank:this.model;
     console.log(this.model)
@@ -331,27 +331,53 @@ checkList=Object.keys(this.model.metrics);
       ]
     }
   ]
-
-  getName(val:any){
-//var datt= this.checkList.find(p=>p.toLocaleLowerCase()==val.toLocaleLowerCase())
+  CurrentMetric=""
+  getDisplay(itm:any, index:number){
+    this.CurrentMetric=itm;
+    console.log( this.CurrentMetric,index)
+    return itm
+  }
+  getName(dikp:boolean){
+if(dikp){
+  var val= this.Evaluation[this.counter].ranking.toLowerCase()
   if(val=="toxicity"){
-    return this.model.metrics.toxicity
+    this.model.metrics.toxicity= this.rankingData
   }else if(val=="truthfulness"){
-    return this.model.metrics.truthfulness
+   this.model.metrics.truthfulness= this.rankingData
   }else if(val=="coherrence"){
-    return this.model.metrics.coherrence
+     this.model.metrics.coherrence= this.rankingData
   }else if(val=="fairness"){
-    return this.model.metrics.fairness
+     this.model.metrics.fairness= this.rankingData
   }else if(val=="hallucination"){
-    return this.model.metrics.hallucination
+    this.model.metrics.hallucination= this.rankingData
   }
   else if(val=="relevance"){
-    return this.model.metrics.relevance
+    this.model.metrics.relevance= this.rankingData
   }else if(val=="safety"){
-    return this.model.metrics.safety
+   this.model.metrics.safety= this.rankingData
   }
-else
-return this.dataPrev
+ 
+}else{
+  var val= this.Evaluation[this.counter].ranking.toLowerCase()
+  if(val=="toxicity"){
+    this.rankingData= this.model.metrics.toxicity
+  }else if(val=="truthfulness"){
+     this.rankingData=this.model.metrics.truthfulness
+  }else if(val=="coherrence"){
+     this.rankingData=this.model.metrics.coherrence
+  }else if(val=="fairness"){
+  this.rankingData=this.model.metrics.fairness
+  }else if(val=="hallucination"){
+  this.rankingData=this.model.metrics.hallucination
+  }
+  else if(val=="relevance"){
+  this.rankingData=this.model.metrics.relevance
+  }else if(val=="safety"){
+  this.rankingData=this.model.metrics.safety
+  }
+}
+
+dikp? this.rankingData=null:""
   }
   Ranking = [
     {
@@ -419,9 +445,17 @@ return this.dataPrev
     }
 
     this.showTab(this.currentTab);
-    this.dataPrev = ""
-    this.dataPrev2 = ""
+    if(n>0){
+      this.getName(true)
+      this.model['alternative response']=""
+      this.counter++
+    }else{
+      this.counter--
+      this.getName(false)
+    }
+ 
     console.log(this.model)
+
     return true
     
   }
@@ -538,6 +572,9 @@ if(this.ref == "rating"){
           }
      )
     }
+    console.log(this.model)
+    this.isSubmitted = true
+    this.disablePrev = true;
   }
      else
       this.disableBtn = false;

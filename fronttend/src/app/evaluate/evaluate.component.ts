@@ -60,7 +60,7 @@ export class EvaluateComponent implements OnInit {
       max=List.length
       var val= Math.round(Math.random()* (max - min + 1) + min)
       console.log(val,min,max)
-      this.specific=   List[val].qest?List[val].qest:List[0].qest
+      this.specific= val<=List.length-1?List[val].qest:List[0].qest;
     }
 
   }

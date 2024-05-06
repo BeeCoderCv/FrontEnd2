@@ -58,7 +58,7 @@ constructor(private restService :  LongEasyManagerService ) { }
          {
 
             this.queryDraft.push(data.generated_text)
-            console.log(this.queryDraft)
+           // console.log(this.queryDraft)
          }
        );
     
