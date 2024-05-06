@@ -147,8 +147,12 @@ app.post("/api/postEvaluationToCloud/", (req, res, next) => {
   //   item: req.body.item,
   // };
   var data = req.body;
-
- cloud.uploadFile(bucketName, data, 'Evaluations');
+  try{
+    cloud.uploadFile(bucketName, data, 'Evaluations');
+  }catch(err){
+    res.status(400).json({ error: err.message });
+    return;
+  }
 
 });
 
@@ -157,11 +161,13 @@ app.post("/api/postRankingToCloud/", (req, res, next) => {
   if (!req.body) {
     errors.push("No item specified");
   };
-  // var data = {
-  //   item: req.body.item,
-  // };
-  var data = req.body;
 
- cloud.uploadFile(bucketName, data, 'Ranking');
+  var data = req.body;
+  try{
+    cloud.uploadFile(bucketName, data, 'Ranking');
+  }catch(err){
+    res.status(400).json({ error: err.message });
+    return;
+  }
 
 });

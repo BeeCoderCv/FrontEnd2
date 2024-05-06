@@ -407,7 +407,7 @@ dikp? this.rankingData=null:""
     this.Evaluation.map((v, i) => {
       this.arr.push(this.getElement(i))
     })
-    console.log(this.arr)
+   // console.log(this.arr)
     // This function will display the specified tab of the form ...
     //var x:ElementRef = document.getElementsByClassName("tab");
 
@@ -454,7 +454,7 @@ dikp? this.rankingData=null:""
       this.getName(false)
     }
  
-    console.log(this.model)
+    //console.log(this.model)
 
     return true
     
@@ -522,59 +522,41 @@ dikp? this.rankingData=null:""
   }
   save1() {
 
-    var dat = {
-      "system prompt": "Your a helpful assistant, Your task is to manage customer querry information. provide as accurate information as possible.",
-      "question prompt": "Hello assistant, my name is. John,I am having trouble purchasing my flight, what might be the problem?",
-      "assistant response": "Hello John, sorry that your facing such problem, could you confirm if your network is active?",
-      "setadata": {
-        "Age": 23,
-        "source": "wikipedia link",
-        "location": "location"
-      },
-      "metrics": {
-        "toxicity": "non toxic",
-        "truthfulness": "high",
-        "coherrence": "high",
-        "fairness": 10,
-        "hallucination": 0,
-        "relevance": 10,
-        "safety": "completely safer"
-      },
-      "domain tople": "assistance"
-    }
     this.isSubmitted = false
     this.disablePrev = false;
     if (this.validateForm()) {
       this.ref == "rating"?this.model.ranks=[this.rankingData]:"";
-      //this.saving = true;
-      // // this._send.updateFileWithJson(dat, this.ref).subscribe(() => {
-      // this._send.updateFileWithJson(dat, this.ref).finally(() => {
-      //  this.isSubmitted = true
-      //    this.disablePrev = true;
 if(this.ref == "rating"){
      this._test.addPost2(this.model).subscribe((res) => {
-       this.isSubmitted = true
-       this.disablePrev = true;
+      console.log(this.model)
+      this.isSubmitted = true
+      this.disablePrev = true;
 
      }, error => {
+      console.log(this.model)
+      this.isSubmitted = true
+      this.disablePrev = true;
        console.log(error)
           }
      )
     }
     else{
      this._test.addPost(this.model).subscribe((res) => {
+       console.log(this.model)
        this.isSubmitted = true
        this.disablePrev = true;
-
      }, 
      error => {
+      console.log(this.model)
+      this.isSubmitted = true
+      this.disablePrev = true;
        console.log(error)
           }
      )
     }
     console.log(this.model)
-    this.isSubmitted = true
-    this.disablePrev = true;
+       this.isSubmitted = true
+       this.disablePrev = true;
   }
      else
       this.disableBtn = false;
