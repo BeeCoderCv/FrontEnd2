@@ -47,61 +47,74 @@ async function uploadFile(bucketName, filePath, destinationFileName) {
     const storage = new Storage({
         keyFilename:'gpc.json', // Path to your service account key file
       });
-      
-   
-      const bucketExists = await storage.bucket(bucketName);
-      if (!bucketExists) {
-        throw new Error(`Bucket ${bucketName} does not exist.`);
-      }
-      const exists= await storage.bucket(bucketName).file(destinationFileName).exists();
-       // Check if the file exists
-       const [fileExists] = await storage.bucket(bucketName).file(destinationFileName).exists();
-    if (!fileExists) {
-      throw new Error(`File ${destinationFileName} not found in ${bucketName}.`);
-    }
+      const bucket = await storage.bucket(bucketName)
       let existingData 
-    try {
-      const bucket = storage.bucket(bucketName);
-
-      if (exists){
-       const file = await storage.bucket(bucketName).file(destinationFileName);
-       final=file;
-        const [file1] = await file.download();
-         // Parse the existing JSON data
-        existingData =  JSON.parse(file1.toString());
-        console.log("existing data....."+JSON.stringify(existingData))
-        if(existingData&&existingData.length>=0){
-         // Add new data to the existing JSON array
-         existingData.push(filePath);
-        }
-         else
-        existingData={"l":"l"}
-        console.log("ene data....."+JSON.stringify(existingData))
-          // Convert the modified data back to JSON string
-      const modifiedJson = JSON.stringify(existingData);
-    await file.save(modifiedJson);
-      }else{
-        console.log("file not exist")
-        var upload;
+      const exists= doesFileExist(bucketName, destinationFileName)
+      .then(async (exists) => {
+          if (exists){
+            console.log("wrong...............entered")
+           const file = await bucket.file(destinationFileName);
+           final=file;
+            const [file1] = await file.download();
+             // Parse the existing JSON data
+            existingData =  JSON.parse(file1.toString());
+            console.log("existing data....."+JSON.stringify(existingData))
+            if(existingData&&existingData.length>=0){
+             // Add new data to the existing JSON array
+             existingData.push(filePath);
+            }
+             else
+            existingData={"l":"l"}
+            console.log("ene data....."+JSON.stringify(existingData))
+              // Convert the modified data back to JSON string
+          const modifiedJson = JSON.stringify(existingData);
+           await file.save(modifiedJson);
+          
+          console.log(`File ${fileName} exists in bucket ${bucketName}.`);
+        } else {
+          console.log("file not exist")
+        var upload='';
         if(destinationFileName=="Ranking"){
           upload="ranking.json";
         }else{
           upload="evaluation.json";
         }
-        
-         await storage.bucket(bucketName).upload(upload, {
-          destination: destinationFileName,
-        });
-      // const file = await storage.bucket(bucketName).file(destinationFileName);
-      // await file.save(modifiedJson);
-      }
+    
+      const file =bucket.file(upload);
+      await file.save(JSON.stringify(filePath));
+      console.log(JSON.stringify(filePath))
+      console.log(`File ${fileName} exists in bucket ${bucketName}.`);
+        }
+      })
+      .catch((err) => {
+        console.error('Error:', err);
+      });
+      
 
-      console.log(`${JSON.stringify(existingData)} uploaded to ${bucketName}/${destinationFileName}.`);
-    } catch (err) {
-      console.error('Error uploading file to bucket:', err);
-    }
+   
   }
+
   
+async function doesFileExist(bucketName, fileName) {
+  try {
+    const storage = new Storage({
+      keyFilename:'gpc.json', // Path to your service account key file
+    });
+    // Get a reference to the bucket
+    const bucket = storage.bucket(bucketName);
+
+    // Get a reference to the file
+    const file = bucket.file(fileName);
+
+    // Check if the file exists
+    const [exists] = await file.exists();
+
+    return exists;
+  } catch (err) {
+    console.error('Error checking file existence:', err);
+    return false;
+  }
+}
 //   Example usage
 const g =[
   {
