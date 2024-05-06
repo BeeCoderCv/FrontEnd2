@@ -5,7 +5,7 @@ var cloud= require("./readBucket.js");
 var app = express();
 app.use(cors());
 const corsOptions = {
-  origin: 'https://frontend-llm-tk7ash3eaa-uc.a.run.app/',
+  origin:['https://frontend-llm-tk7ash3eaa-uc.a.run.app', 'http://localhost:4200'],
   methods: 'GET,POST',
   allowedHeaders: 'Content-Type,Authorization',
 };
