@@ -67,7 +67,7 @@ counter:number=0;
    // console.log(this.model)
     this.model['question prompt']=this.req;
     this.model['assistant response']=this.res;
-    this.ref == "rating"?this.model["domain topic"]=this.Category:this.model['domain tople']=this.Category; 
+    this.ref == "rating"?this.model["domain topic"]=this.Category:""; 
   
     if (this.ref == "rating") {
       this.Evaluation = this.Ranking
@@ -353,7 +353,7 @@ if(dikp){
     this.model.metrics.toxicity= this.rankingData
   }else if(val=="truthfulness"){
    this.model.metrics.truthfulness= this.rankingData
-  }else if(val=="coherrence"){
+  }else if(val=="coherence"){
      this.model.metrics.coherrence= this.rankingData
   }else if(val=="fairness"){
      this.model.metrics.fairness= this.rankingData
@@ -372,7 +372,7 @@ if(dikp){
     this.rankingData= this.model.metrics.toxicity
   }else if(val=="truthfulness"){
      this.rankingData=this.model.metrics.truthfulness
-  }else if(val=="coherrence"){
+  }else if(val=="coherence"){
      this.rankingData=this.model.metrics.coherrence
   }else if(val=="fairness"){
   this.rankingData=this.model.metrics.fairness
@@ -530,6 +530,8 @@ dikp? this.rankingData=null:""
     // this.nextPrev(-1)
   }
   save1() {
+    this.getName(true)
+    this.ref == "rating"?"":this.model['domain tople']=this.Category; 
   this.isSubmitted = false
     this.disablePrev = false;
     if (this.validateForm()) {
