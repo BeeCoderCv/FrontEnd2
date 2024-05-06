@@ -66,15 +66,7 @@
                         <label class="container" *ngFor="let item of itm.indicator, let indexs = index" >
                          
                           <input type="radio" checked="checked" [name]="'radio2'+index" [value]="itm.view==1?item.value:item.indication" class="form-control ele"
-                            [(ngModel)]='
-                            itm.ranking=="toxicity"?this.model.metrics.toxicity
-                            :itm.ranking=="Truthfulness"?this.model.metrics.truthfulness
-                            : itm.ranking=="Coherence"?this.model.metrics.coherrence
-                            : itm.ranking=="Fairness"?this.model.metrics.fairness
-                            : itm.ranking=="Hallucination"?this.model.metrics.hallucination
-                            : itm.ranking=="Relevance"?this.model.metrics.relevance
-                            : itm.ranking=="Safety"?this.model.metrics.safety
-                            :rankingData' [ngModelOptions]="{standalone: true}">
+                            [(ngModel)]='rankingData' [ngModelOptions]="{standalone: true}">
                           <span class="checkmark"></span>
                            <span class="fon" *ngIf="itm.view==1">{{(ref=='rating'&&index==itm.indicator.length-1)?item.indication:item.value}}</span>
                            <span class="fon"  *ngIf="itm.view==0">{{(ref=='rating'&&index==itm.indicator.length-1)?item.value:item.indication}}</span>
@@ -91,7 +83,7 @@
                        </div>
                       </div>
                    </div>
-               <span *ngIf="error" style="color: red;">{{itm.ranking}} rating is required</span>
+               <span *ngIf="error" style="color: red;">{{ref!='rating'?itm.ranking + " rating":"Ranking"}}  is required</span>
 
                <div class="col-md-12">
                 <br>
