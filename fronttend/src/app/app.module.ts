@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -22,8 +22,12 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { EvaluateComponent } from './evaluate/evaluate.component';
 import { AppMainComponent } from './app-main/app-main.component';
 import { SubMainComponent } from './sub-main/sub-main.component';
+import { AppConfig } from './app.config';
+import { AppConfigService } from './app.config.service';
 
-
+export function initConfig(config: AppConfig) {
+  return () => config.load();
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +60,7 @@ import { SubMainComponent } from './sub-main/sub-main.component';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [ExpenseEntryService],
+  providers: [ExpenseEntryService, AppConfigService, AppConfig,{ provide: APP_INITIALIZER, useFactory: initConfig, deps: [AppConfig], multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

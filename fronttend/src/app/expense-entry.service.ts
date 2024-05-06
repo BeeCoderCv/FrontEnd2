@@ -5,6 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { pipe } from 'rxjs';
 import { IExpenseEntry } from './interface/iexpense-entry';
+import { AppConfigService } from './app.config.service';
 
 
 
@@ -13,21 +14,25 @@ import { IExpenseEntry } from './interface/iexpense-entry';
 })
 export class ExpenseEntryService {
   // resource URL 
-  private expenseRestUrl = 'http://localhost:8000/api/expense';
-  private expenseRestUrl2 = 'http://localhost:8000/api/postEvaluationToCloud';
-  private expenseRestUrl3 = 'http://localhost:8000/api/postRankingToCloud';
 
-  //postRankingToCloud
 
  
 
          //constructor to initialize an object of HttpClient Class
-        constructor( private httpClient : HttpClient) { }
+        constructor( private httpClient : HttpClient, private appconfigService: AppConfigService) { 
+
+        }
   
         //fetch data from the json API
-       
+        private expenseRestUrl = this.appconfigService.API_BASE+"/api/expense"//'http://localhost:8000/api/expense';
+        private expenseRestUrl2 = this.appconfigService.API_BASE+"/api/postEvaluationToCloud"//'http://localhost:8000/api/postEvaluationToCloud';
+        private expenseRestUrl3 = this.appconfigService.API_BASE+"/api/postRankingToCloud"//'http://localhost:8000/api/postRankingToCloud';
+        private expense344 = this.appconfigService.API_BASE+"/api/expense"//'http://localhost:8000/api/expense';
+      
+        //postRankingToCloud    
 
          addPost(data:any): Observable<any> {
+         
           return this.httpClient.post<any>(this.expenseRestUrl2,
          data)
           //.pipe(retry(3),catchError(this.httpErrorHandler) );
@@ -36,7 +41,8 @@ export class ExpenseEntryService {
 
         //fetch data from the json API
         addPost2(data:any): Observable<any> {
-          return this.httpClient.post<any>(this.expenseRestUrl2,
+          console.log(this.expenseRestUrl3)
+          return this.httpClient.post<any>(this.expenseRestUrl3,
          data)
           //.pipe(retry(3),catchError(this.httpErrorHandler) );
          }
