@@ -12,8 +12,8 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from
 export class LongEasyManagerService {
 
   constructor(private httpClient: HttpClient) { }
-  private APiStatus = 'http://35.232.246.77:8000/';
-  private SearchQueryendpoint = 'http://35.232.246.77:8000/send_text';
+  private APiStatus = 'https://www.langeasyllm.com';
+  private SearchQueryendpoint = 'https://www.langeasyllm.com/send_text';
   // private storage = new Storage({
   //   keyFilename: './dataStorage/gpc.json', // Path to your service account key file
   // });
