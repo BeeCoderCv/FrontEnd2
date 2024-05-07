@@ -57,7 +57,7 @@
                         <div>
                         <div><strong>{{"Question:"}}&nbsp;{{req}}</strong></div>
                           <span *ngIf="ref!='rating'">{{"Please evaluate this response based on"}} <strong>{{itm.ranking}}</strong></span>
-                          <span *ngIf="ref=='rating'">{{"Please rank this response to the above question"}}</span>
+                          <span *ngIf="ref=='rating'">{{"Please rank the response to the above question"}}</span>
                         </div>
                       </div>
                       <br>
@@ -68,7 +68,7 @@
                           <input type="radio" checked="checked" [name]="'radio2'+index" [value]="itm.view==1?item.value:item.indication" class="form-control ele"
                             [(ngModel)]='rankingData' [ngModelOptions]="{standalone: true}">
                           <span class="checkmark"></span>
-                           <span class="fon" *ngIf="itm.view==1">{{(ref=='rating'&&index==itm.indicator.length-1)?item.indication:item.value}}</span>
+                           <span class="fon" *ngIf="itm.view==1">{{(ref=='rating'&&item.value=="6")?item.indication:item.value}}</span>
                            <span class="fon"  *ngIf="itm.view==0">{{(ref=='rating'&&index==itm.indicator.length-1)?item.value:item.indication}}</span>
                         </label>
   
