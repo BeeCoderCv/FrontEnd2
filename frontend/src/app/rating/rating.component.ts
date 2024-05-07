@@ -530,8 +530,12 @@ dikp? this.rankingData=null:""
     // this.nextPrev(-1)
   }
   save1() {
-    this.getName(true)
-    this.ref == "rating"?"":this.model['domain tople']=this.Category; 
+
+    if(this.ref == "rating")""
+      else{
+        this.getName(true);
+        this.model['domain tople']=this.Category; 
+    }
   this.isSubmitted = false
     this.disablePrev = false;
     if (this.validateForm()) {
