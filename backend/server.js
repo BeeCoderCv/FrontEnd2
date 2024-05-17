@@ -23,6 +23,48 @@ app.listen(HTTP_PORT, () => {
 });
 
 
+
+  // const axios = require('axios');
+  // const readline = require('readline');
+  // const data = { text: "tell me how to negotiate effectively with an investor" };
+  // const API_URL = "http://localhost:8000/send_text"; // Replace with your actual URL
+  // const sendDataToFastAPIAndPrint = async (API_URL, data) => {
+  //  try {
+  //   const response = await axios({
+  //    method: 'get',
+  //    url: API_URL,
+  //    responseType: 'stream',
+  //    data: data
+  //   });
+  
+  //   const stream = response.data;
+  
+  //   stream.on('data', (chunk) => {
+  //    const decodedChunk = chunk.toString('utf-8');
+  
+  //    // Print with a slight delay to simulate typing effect (optional)
+  //    (async () => {
+  //     for (let char of decodedChunk) {
+  //      process.stdout.write(char);
+  //      await new Promise(resolve => setTimeout(resolve, 1e-10)); // Adjust delay as desired
+  //     }
+  //    })();
+  //   });
+  
+  //   stream.on('end', () => {
+  //    console.log('\nStream ended.');
+  //   });
+  
+  //  } catch (error) {
+  //   console.error(`Error sending data: ${error.message}`);
+  //  }
+  // };
+  
+  // // Example usage
+  // sendDataToFastAPIAndPrint(API_URL, data);
+
+  
+
 app.get("/", (req, res, next) => {
   res.json({ message: "Ok" });
 });
@@ -139,6 +181,24 @@ app.get("/api/expense", (req, res, next) => {
 // });
 
 
+app.get("/api/getQuestionByCategory/:cat", async (req, res, next) => {
+  try{
+    var params = [req.params.cat];
+    await cloud.readQuestion(bucketName,'QA_ranking.json',params,[],res);
+   }catch(err){
+     res.status(400).json({ error: err.message });
+     return;
+   }
+});
+app.get("/api/getQuestionCategory/", async (req, res, next) => {
+  try{
+   await cloud.readCategory(bucketName,'QA_ranking.json',res);
+  }catch(err){
+    res.status(400).json({ error: err.message });
+    return;
+  }
+
+});
 app.post("/api/postEvaluationToCloud/", async (req, res, next) => {
   var errors = [];
   if (!req.body) {
@@ -184,3 +244,4 @@ app.get('/api/success2', (req, res) => {
   // Send an error response with a JSON object
   res.status(500).json({ status: 'error', message: 'API call failed' });
 });
+

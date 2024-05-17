@@ -12,7 +12,9 @@ export class ResponseComponent implements OnInit {
   @Input()reqText:string="";
   @Input()ref:string=""
   @Input() title:string="";
-  @Input() Category="0"
+  @Input() Category="0";
+  @Input() req: string = "";
+  @Input() res: string = "";
 
   specific:string=''
   previousSearch:any[]=[];
@@ -32,12 +34,15 @@ constructor(private restService :  LongEasyManagerService ) { }
   ngOnInit(): void {
 
     this.selectedContent.req=this.reqText;
+    if(this.ref=='rating')this.selectedContent.res=this.res; else{
+      this.getServerResponse();
+      this.getQueryResponse1();
+      this.getQueryResponse();
+    }
     console.log(this.reqText)
 
    // this.selectedContent=this.data[0].content;
-    this.getServerResponse();
-     this.getQueryResponse1();
-     this.getQueryResponse();
+ 
   }
 
 
