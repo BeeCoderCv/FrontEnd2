@@ -24,6 +24,7 @@ export class ExpenseEntryService {
         }
   
         //fetch data from the json API
+        private base = this.appconfigService.API_BASE
         private expenseRestUrl = this.appconfigService.API_BASE+"/api/expense"//'http://localhost:8000/api/expense';
         private expenseRestUrl2 = this.appconfigService.API_BASE+"/api/postEvaluationToCloud"//'https://backend-llm-tk7ash3eaa-uc.a.run.app/api/postEvaluationToCloud'//this.appconfigService.API_BASE+"/api/postEvaluationToCloud"//'http://localhost:8000/api/postEvaluationToCloud';
         private expenseRestUrl3 = this.appconfigService.API_BASE+"/api/postRankingToCloud"//'http://localhost:8000/api/postRankingToCloud';
@@ -47,7 +48,16 @@ export class ExpenseEntryService {
           //.pipe(retry(3),catchError(this.httpErrorHandler) );
          }
 
-
+         getCategory() : Observable<any> {
+          var url= this.base  +"/api/getQuestionCategory"
+          return this.httpClient.get<any>(url)
+         //.pipe(catchError(this.httpErrorHandler));
+          }
+          getQuestionByCategory(val:string) : Observable<any> {
+            var url= this.base  +"/api/getQuestionByCategory/"+ val
+            return this.httpClient.get<any>(url)
+           //.pipe(catchError(this.httpErrorHandler));
+            }
          get1() : Observable<any> {
           console.log(this.expense344)
           return this.httpClient.get<any>(this.expense344)

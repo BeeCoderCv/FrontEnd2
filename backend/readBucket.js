@@ -4,20 +4,21 @@ const fs = require('fs');
 
 // Specify the path to the JSON file
 const filePath = 'data.json';
-
+var cat= [];
 // Read the JSON file
 
 
-async function readBucket(bucketName){
+async function readBucket(bucketName, filename){
  const storage = new Storage({
     keyFilename:'gpc.json', // Path to your service account key file
   });
-
+  var Context=null
 try{
 const bucket = storage.bucket(bucketName);
  
 const folders = new Set();
 const [Files]=await bucket.getFiles();
+
 Files.forEach(file => {
    // const parts = file.name.split('/');
    // if (parts.length > 1) {
@@ -32,25 +33,100 @@ console.log("Bucket Found")
 //Download the file as a bufferconst 
    
  Files.forEach(async p=>{
-  console.log(p.name)
-  if(p.name.toString()=='Ranking/'){
+  if(p.name.toString()==filename){
     const [fileContent] = await p.download(); 
-    console.log('File content:', 
-    fileContent.toString());
+    Context=fileContent.toString()
+    console.log(p.name,filename)
+ //   console.log('File content:',Context);
+    return Context?Context:[]
   }
 
  })
+ console.log('File content:',Context);
+ return Context?Context:[]
+ //return Files?Files:""
 
- return Files?Files:""
 }catch (parseError) {
   console.error('Error parsing JSON data:', parseError);
-  return Files?Files:""
+  return   Context?Context:[]
 }
 
 }
 
+const FilesArr=[
+  'Evaluations',
+  'Evaluations/',
+  'Evaluations/object_1714930902691.json',
+  'QA_ranking.json',
+  'Ranking/',
+  'evaluation.json',
+  'ranking.json'
+]
 
-readBucket(bucketName)
+
+async function readCategory(bucketName, filename,res){
+  const storage = new Storage({
+    keyFilename:'gpc.json', // Path to your service account key file
+  });
+  var Context=null
+try{
+const bucket = storage.bucket(bucketName);
+const [Files]=await bucket.getFiles();
+
+ Files.forEach(async p=>{
+  if(p.name.toString()==filename){
+    const [fileContent] = await p.download(); 
+    Context=fileContent.toString()
+    console.log(p.name,filename)
+    var datt=[];
+     JSON.parse(Context).map(v=>datt.push(v["category"]))
+    console.log(datt)
+    // return datt
+    return res.json({ status: 'success', message: 'API call successful--',data: datt});
+  }
+  return []
+
+ })
+
+
+}catch (parseError) {
+  console.error('Error parsing JSON data:', parseError);
+  return  []
+}
+}
+
+async function readQuestion(bucketName, filename, category, arr,res){
+  const storage = new Storage({
+    keyFilename:'gpc.json', // Path to your service account key file
+  });
+  var Context=null;
+  
+try{
+const bucket = storage.bucket(bucketName);
+const [Files]=await bucket.getFiles();
+
+ Files.forEach(async p=>{
+  if(p.name.toString()==filename){
+    const [fileContent] = await p.download(); 
+    Context=fileContent.toString()
+    console.log(p.name,filename,category)
+    var datt=  JSON.parse(Context).find(v=>v["category"]==category)?.questions
+    console.log(datt)
+    return res.json({ status: 'success', message: 'API call successful--',data: datt});
+    //return datt;
+  }
+  return []
+ })
+
+
+}catch (parseError) {
+  console.error('Error parsing JSON data:', parseError);
+  return  []
+}
+}
+// readBucket(bucketName,FilesArr[3])
+// readCategory(bucketName,FilesArr[3])
+//readQuestion(bucketName,FilesArr[3],"Mathematics",[])
 
 async function uploadFile(bucketName, filePath, destinationFileName) {
     const storage = new Storage({
@@ -173,7 +249,10 @@ async function doesFileExist(bucketName, fileName) {
 
 
 module.exports = {
-    uploadFile: uploadFile
+    uploadFile: uploadFile,
+    readQuestion:readQuestion,
+    readCategory:readCategory,
+    cat:cat
   };
 
 

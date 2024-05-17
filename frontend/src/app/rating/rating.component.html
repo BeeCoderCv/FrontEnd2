@@ -17,7 +17,8 @@
         </p>
         <br>
         <br>
-    </div> -->
+    </div> 
+-->
     
     <div class="outerContainer">
         <div class="innerContainer box34" >
@@ -68,7 +69,7 @@
                           <input type="radio" checked="checked" [name]="'radio2'+index" [value]="itm.view==1?item.value:item.indication" class="form-control ele"
                             [(ngModel)]='rankingData' [ngModelOptions]="{standalone: true}">
                           <span class="checkmark"></span>
-                           <span class="fon" *ngIf="itm.view==1">{{(ref=='rating'&&item.value=="6")?item.indication:item.value}}</span>
+                          <span class="fon" *ngIf="itm.view==1">{{(ref=='rating'&&item.value=="6")?item.indication:item.value}}</span>
                            <span class="fon"  *ngIf="itm.view==0">{{(ref=='rating'&&index==itm.indicator.length-1)?item.value:item.indication}}</span>
                         </label>
   
@@ -88,12 +89,12 @@
                <div class="col-md-12">
                 <br>
                 <div class="form-group ">
-                    <label class="small mb-1" for="learningObjective">Additional Comment (Optional)
+                    <label class="small mb-1" for="learningObjective">{{ref!='rating'?"Additional Comment (Optional)":"Alternative Response (Optional)"}}
                         <!-- <span style="color:red">*</span> -->
                     </label><br>
                     <textarea name="CComment" class="form-control ele" id="Comment" col="5"
                         [(ngModel)]="model['alternative response']" #ClearningObjective="ngModel"
-                        placeholder="Comment"></textarea>
+                        [placeholder]='ref!="rating"?"Additional Comment":"Alternative Response"'></textarea>
                 </div>
             </div>
          
