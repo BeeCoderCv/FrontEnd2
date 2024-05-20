@@ -33,7 +33,15 @@ model:any = {
     "relevance": 10,
     "safety": ""
   },
-  "alternative response": "None",
+  "alternative response": {
+    "toxicity": "",
+    "truthfulness": "",
+    "coherrence": "",
+    "fairness": "",
+    "hallucination": "",
+    "relevance": "",
+    "safety": ""
+  },
   "domain tople": "assistance"
 }
 rank:any={
@@ -57,11 +65,13 @@ rank:any={
   error: boolean = false;
   error1: boolean = false;
   rankingData:any=null;
+  responseData:any=null;
   colorCode: any = [
     '#66FF00', '#66FF33', '#CCFF33', '#FFFF33', '#FFCC33', '#FF9933', '#FF6633', '#FF3333', '#FF3300', '#FF0033'
   ]
 checkList=Object.keys(this.model.metrics);
 counter:number=0;
+ListCategory: any= [];
   ngOnInit(): void {
     this.model=this.ref == "rating"?this.rank:this.model;
    // console.log(this.model)
@@ -72,8 +82,17 @@ counter:number=0;
     if (this.ref == "rating") {
       this.Evaluation = this.Ranking
       console.log(this.Category)
+    
     }
+    this.getCat()
     this.getServerResponse2()
+  }
+  getCat() {
+    this._test.getCategory()
+      .subscribe(data => {
+        console.log(data)
+        this.ListCategory = data.data
+      });
   }
   getServerResponse2() {
     this._test.get1()
@@ -351,42 +370,59 @@ if(dikp){
   var val= this.Evaluation[this.counter].ranking.toLowerCase()
   if(val=="toxicity"){
     this.model.metrics.toxicity= this.rankingData
+    this.model["alternative response"].toxicity=this.responseData
   }else if(val=="truthfulness"){
    this.model.metrics.truthfulness= this.rankingData
+   this.model["alternative response"].truthfulness=this.responseData
   }else if(val=="coherence"){
      this.model.metrics.coherrence= this.rankingData
+     this.model["alternative response"].coherrence=this.responseData
   }else if(val=="fairness"){
      this.model.metrics.fairness= this.rankingData
+     this.model["alternative response"].fairness=this.responseData
   }else if(val=="hallucination"){
     this.model.metrics.hallucination= this.rankingData
+    this.model["alternative response"].hallucination=this.responseData
   }
   else if(val=="relevance"){
     this.model.metrics.relevance= this.rankingData
+    this.model["alternative response"].relevance=this.responseData
   }else if(val=="safety"){
    this.model.metrics.safety= this.rankingData
+   this.model["alternative response"].safety=this.responseData
   }
  
 }else{
   var val= this.Evaluation[this.counter].ranking.toLowerCase()
   if(val=="toxicity"){
     this.rankingData= this.model.metrics.toxicity
+    this.responseData= this.model["alternative response"].toxicity
   }else if(val=="truthfulness"){
      this.rankingData=this.model.metrics.truthfulness
+     this.responseData= this.model["alternative response"].truthfulness
   }else if(val=="coherence"){
      this.rankingData=this.model.metrics.coherrence
+     this.responseData= this.model["alternative response"].coherrence
   }else if(val=="fairness"){
   this.rankingData=this.model.metrics.fairness
+  this.responseData= this.model["alternative response"].fairness
   }else if(val=="hallucination"){
   this.rankingData=this.model.metrics.hallucination
+  this.responseData= this.model["alternative response"].hallucination
   }
   else if(val=="relevance"){
   this.rankingData=this.model.metrics.relevance
+  this.responseData= this.model["alternative response"].relevance
   }else if(val=="safety"){
   this.rankingData=this.model.metrics.safety
+  this.responseData= this.model["alternative response"].safety
   }
 }
 
-dikp? this.rankingData=null:""
+if(dikp){
+  this.rankingData=null;
+  this.responseData=null;
+}
   }
   Ranking = [
     {
@@ -456,7 +492,7 @@ dikp? this.rankingData=null:""
     this.showTab(this.currentTab);
     if(n>0){
       this.getName(true)
-      this.model['alternative response']=""
+      // this.model['alternative response']=""
       this.counter++
     }else{
       this.counter--
@@ -529,6 +565,7 @@ dikp? this.rankingData=null:""
   Submit() {
     // this.nextPrev(-1)
   }
+  
   save1() {
 
     if(this.ref == "rating")""
@@ -539,20 +576,23 @@ dikp? this.rankingData=null:""
   this.isSubmitted = false
     this.disablePrev = false;
     if (this.validateForm()) {
-      this.ref == "rating"?this.model.ranks=[this.rankingData]:"";
+     // this.ref == "rating"?this.model.ranks=[this.rankingData]:"";
 if(this.ref == "rating"){
+  this.model.ranks=[this.rankingData];
+  this.model["alternative response"]=this.responseData;
+  console.log(this.model)
      this._test.addPost2(this.model).subscribe((res) => {
       console.log(this.model)
       this.isSubmitted = true
       this.disablePrev = true;
 
      }
-    //  , error => {
-    //   console.log(this.model)
-    //   this.isSubmitted = true
-    //   this.disablePrev = true;
-    //    console.log(error)
-    //       }
+    // //  , error => {
+    // //   console.log(this.model)
+    // //   this.isSubmitted = true
+    // //   this.disablePrev = true;
+    // //    console.log(error)
+    // //       }
      )
     }
     else{
@@ -560,18 +600,9 @@ if(this.ref == "rating"){
        console.log(this.model)
        this.isSubmitted = true
        this.disablePrev = true;
-     }, 
-    //  error => {
-    //   console.log(this.model)
-    //   this.isSubmitted = true
-    //   this.disablePrev = true;
-    //    console.log(error)
-    //       }
+     }
      )
     }
-    // console.log(this.model)
-    //    this.isSubmitted = true
-    //    this.disablePrev = true;
   }
      else
       this.disableBtn = false;

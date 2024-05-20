@@ -27,7 +27,7 @@
            <br><br>
        </div>
 
-    <div class="toolBar">
+    <div class="toolBar" *ngIf="ref!='rating'">
         <div></div>
         <div class="box3 px-3 py-1" (click)="togglePanel()">
             <span class="px-1"><i [ngClass]="toggleUp?'fa fa-eye px-1':'fa fa-eye-slash px-2'"></i>{{toggleUp?"Show draft":"Hide draft"}}</span>
@@ -104,4 +104,4 @@
     <br>
     </div>
 </div>
-<app-rating [Category]="Category" [res]="ref!='rating'?selectedContent.res:queryDraft" [ref]="ref" [req]="reqText" class="outerBox" *ngIf="toggleRating" (modalsave)="resp()"></app-rating>
+<app-rating [Category]="Category" [res]="ref!='rating'?selectedContent.res:[selectedContent.res]" [ref]="ref" [req]="reqText" class="outerBox" *ngIf="toggleRating" (modalsave)="resp()"></app-rating>

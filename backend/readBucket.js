@@ -37,7 +37,7 @@ console.log("Bucket Found")
     const [fileContent] = await p.download(); 
     Context=fileContent.toString()
     console.log(p.name,filename)
- //   console.log('File content:',Context);
+    console.log('File content:',Context);
     return Context?Context:[]
   }
 
@@ -62,7 +62,7 @@ const FilesArr=[
   'evaluation.json',
   'ranking.json'
 ]
-
+readBucket(bucketName,FilesArr[4])
 
 async function readCategory(bucketName, filename,res){
   const storage = new Storage({
