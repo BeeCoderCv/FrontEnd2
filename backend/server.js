@@ -2,6 +2,7 @@ var express = require("express");
 var cors = require("cors");
 var db = require("./sqlitedb.js");
 var cloud= require("./readBucket.js");
+var stream = require("./streamer.js")
 var app = express();
 app.use(cors());
 const corsOptions = {
@@ -21,47 +22,6 @@ var HTTP_PORT = 8000;
 app.listen(HTTP_PORT, () => {
   console.log("Server running on port %PORT%".replace("%PORT%", HTTP_PORT));
 });
-
-
-
-  // const axios = require('axios');
-  // const readline = require('readline');
-  // const data = { text: "tell me how to negotiate effectively with an investor" };
-  // const API_URL = "http://localhost:8000/send_text"; // Replace with your actual URL
-  // const sendDataToFastAPIAndPrint = async (API_URL, data) => {
-  //  try {
-  //   const response = await axios({
-  //    method: 'get',
-  //    url: API_URL,
-  //    responseType: 'stream',
-  //    data: data
-  //   });
-  
-  //   const stream = response.data;
-  
-  //   stream.on('data', (chunk) => {
-  //    const decodedChunk = chunk.toString('utf-8');
-  
-  //    // Print with a slight delay to simulate typing effect (optional)
-  //    (async () => {
-  //     for (let char of decodedChunk) {
-  //      process.stdout.write(char);
-  //      await new Promise(resolve => setTimeout(resolve, 1e-10)); // Adjust delay as desired
-  //     }
-  //    })();
-  //   });
-  
-  //   stream.on('end', () => {
-  //    console.log('\nStream ended.');
-  //   });
-  
-  //  } catch (error) {
-  //   console.error(`Error sending data: ${error.message}`);
-  //  }
-  // };
-  
-  // // Example usage
-  // sendDataToFastAPIAndPrint(API_URL, data);
 
   
 
@@ -235,6 +195,24 @@ app.post("/api/postRankingToCloud/", async (req, res, next) => {
 
 });
 
+const dataz = { text: "tell me how to negotiate effectively with an investor" };
+const API_URL = "http://34.72.161.75:8000/send_text"//https://www.langeasyllm.com//send_text";
+
+
+app.post("/api/stream/", async (req, res, next) => {
+ 
+  console.log(req.body)
+
+  var data = req.body
+  try{
+   await stream.sendDataToFastAPIAndPrint(API_URL, data,res);
+   // res.json({ status: 'success', message: 'API call successful' });
+  }catch(err){
+    res.status(400).json({ error: err.message });
+    return;
+  }
+
+});
 app.get('/success', (req, res) => {
   // Send a success response with a JSON object
   res.json({ status:"success" ,message: 'API call successful' });

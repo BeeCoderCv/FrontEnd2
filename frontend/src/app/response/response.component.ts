@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { LongEasyManagerService } from '../long-easy-manager.service';
+import { ExpenseEntryService } from '../expense-entry.service';
 
 @Component({
   selector: 'app-response',
@@ -21,23 +22,27 @@ export class ResponseComponent implements OnInit {
 tooltip="Rate response"
 toggleUp:boolean=true;
 toggleRating:boolean=false;
-
+sub:any;
+sub2:any;
 status : any;
 state : boolean = false;
-queryDraft :  string []= [];
+queryDraft :  string []= ['',''];
 selectedContent:any={
   req:null,
   res:null
   };
-constructor(private restService :  LongEasyManagerService ) { }
+  data: string[] = [];
+constructor(private restService :  LongEasyManagerService ,private _test:ExpenseEntryService) { }
 
   ngOnInit(): void {
 
     this.selectedContent.req=this.reqText;
     if(this.ref=='rating')this.selectedContent.res=this.res; else{
       this.getServerResponse();
-      this.getQueryResponse1();
-      this.getQueryResponse();
+      this.getStream()
+    //  this.getQueryResponse1();
+      // this.getQueryResponse();
+   
     }
     console.log(this.reqText)
 
@@ -45,7 +50,24 @@ constructor(private restService :  LongEasyManagerService ) { }
  
   }
 
-
+getStream(){
+this.sub=  this._test.getStream(this.reqText).subscribe(
+    chunk => {
+      // this.data.push(chunk);
+      this.selectedContent.res=chunk.partialText
+      this.state = false;
+      this.queryDraft[0]=chunk.partialText
+      console.log(chunk.partialText)
+      this.getScrollable()
+    },
+    error => {
+      console.error('Error receiving stream:', error);
+    },
+    () => {
+      console.log('Streaming completed');
+    }
+  );
+}
   getServerResponse() {
     this.restService.fetchData()
     .subscribe( data => 
@@ -58,30 +80,44 @@ constructor(private restService :  LongEasyManagerService ) { }
 
    getQueryResponse() {
    
-      this.restService.getResponse(this.reqText)
-      .subscribe( data =>   
+  this.sub2=  this._test.getStream(this.reqText)
+      .subscribe( chunk =>   
          {
-
-            this.queryDraft.push(data.generated_text)
+          this.selectedContent.res=chunk.partialText
+          this.state = false;
+          this.queryDraft[1]=chunk.partialText
+           // this.queryDraft.push(data.generated_text)
            // console.log(this.queryDraft)
          }
        );
-    
+  console.log(this.sub)  
    }
    getQueryResponse1() {
     this.state = true
-    this.restService.getResponse(this.reqText) 
+   // this.restService.getResponse(this.reqText) 
+   this.sub2=    this._test.getStream(this.reqText)
     .subscribe( data =>   
        {
-        this.selectedContent.res= data.generated_text;
-
-          this.queryDraft.push(data.generated_text)
+        
+        this.queryDraft[1]=data.generated_text
+         // this.queryDraft.push(data.generated_text)
           const generatedText = data.generated_text;
           //  this.animateText(data.generated_text, 0); // Start animating the text
-          this.state = false;
+    
        }
      );
  }
+ stopStream() {
+  // Unsubscribe from the observable stream
+  if (this.sub) {
+    this.sub.unsubscribe();
+    this.proceedToNext(0)
+  }
+  if (this.sub2) {
+    this.sub2.unsubscribe();
+    this.proceedToNext(1)
+  }
+}
  copyToClipboard(text : string) {
   // Create a textarea element
   const textarea = document.createElement('textarea');
@@ -104,33 +140,38 @@ constructor(private restService :  LongEasyManagerService ) { }
 
 
  animateText(text: string, index: number) {
-  if (index < text.length) {
-    setTimeout(() => {
-      this.selectedContent.res += text[index];
-      this.animateText(text, index + 1);
-    }, 100); // Adjust the delay as needed
-  }
+  // if (index < text.length) {
+  //   setTimeout(() => {
+  //     this.selectedContent.res += text[index];
+  //     this.animateText(text, index + 1);
+  //   }, 100); // Adjust the delay as needed
+  // }
 }
 
 toggleRes(){
-
-      if(this.specific != null && this.specific != ""){
-        this.queryDraft =[];
-        this.reqText=this.specific
-        this.previousSearch.push(Object.assign({},this.selectedContent));
-      
-        this.getQueryResponse1();
-        this.getQueryResponse();
-        this.selectedContent.req=this.reqText;
-      
-        this.specific ="";
-        window.scrollTo(0, document.body.scrollHeight);
-      }  
-
-  
+  this.stopStream()
+  //this.proceedToNext()
   }
-
-
+proceedToNext(n:number){
+  n==0?
+  setTimeout(()=>{  if(this.specific != null && this.specific != ""){
+    this.queryDraft =[];
+    this.reqText=this.specific
+    this.previousSearch.push(Object.assign({},this.selectedContent));
+    this.getStream() // this.getQueryResponse1();
+    // this.getQueryResponse();
+    this.selectedContent.req=this.reqText;
+    this.selectedContent.res=""
+    this.specific ="";
+    this.getScrollable()
+  } })  : ""//this.getQueryResponse1();
+}
+getScrollable(){
+  const scrollableElement:any = document.getElementById('scrollableElement');
+  setTimeout(function() {
+    scrollableElement.scrollTop = scrollableElement.scrollHeight;
+}, 400);
+}
 togglePanel(){
   this.toggleUp?this.toggleUp=false:this.toggleUp=true;
 }
