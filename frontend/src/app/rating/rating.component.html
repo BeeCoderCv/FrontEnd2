@@ -44,9 +44,10 @@
                        
                             <select class="form-select form-select-sm frele" *ngIf="ref!='rating'" aria-label=".form-select-sm example" required  [(ngModel)]="Category" >
                                 <option selected value="0">select Category</option>
-                                <option value="Science">Science</option>
+                                <option [value]="itm" *ngFor="let itm of ListCategory">{{itm}}</option>
+                                <!-- <option value="Science">Science</option>
                                 <option value="Politics">Politics</option>
-                                <option value="Art">Art</option>
+                                <option value="Art">Art</option> -->
                               </select>
                               <input class="form-control" [value]="this.Category" *ngIf="ref=='rating'" disabled>
                     </div>
@@ -93,7 +94,7 @@
                         <!-- <span style="color:red">*</span> -->
                     </label><br>
                     <textarea name="CComment" class="form-control ele" id="Comment" col="5"
-                        [(ngModel)]="model['alternative response']" #ClearningObjective="ngModel"
+                        [(ngModel)]="responseData" #ClearningObjective="ngModel"
                         [placeholder]='ref!="rating"?"Additional Comment":"Alternative Response"'></textarea>
                 </div>
             </div>
