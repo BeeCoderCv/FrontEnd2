@@ -1,10 +1,10 @@
-<div class="outerBox " *ngIf="!toggleRating">
+<div class="outerBox " *ngIf="!toggleRating" id="scrollableElement">
     <div style="margin-top: 70px;" *ngFor="let dtt of previousSearch">
         <div class="row">
             <div class="IconCard">
                 <div ><span><i class="fa fa-user" style="font-size:20px"></i></span></div>
             </div>
-            <div class="mainCard2">
+            <div class="mainCard2" style="white-space: pre-line">
                 {{dtt.req}}
             </div>
            </div>
@@ -49,7 +49,7 @@
         <div class="IconCard">
             <div ><span><i  class="fa fa-user" style="font-size:20px"></i></span></div>
         </div>
-        <div class="mainCard2">
+        <div class="mainCard2" >
             {{selectedContent.req}}
         </div>
        </div>
