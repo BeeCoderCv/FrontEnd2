@@ -40,7 +40,7 @@ constructor(private restService :  LongEasyManagerService ,private _test:Expense
     if(this.ref=='rating')this.selectedContent.res=this.res; else{
       this.getServerResponse();
       this.getStream()
-    //  this.getQueryResponse1();
+      this.getQueryResponse1();
       // this.getQueryResponse();
    
     }
@@ -96,13 +96,12 @@ this.sub=  this._test.getStream(this.reqText).subscribe(
     this.state = true
    // this.restService.getResponse(this.reqText) 
    this.sub2=    this._test.getStream(this.reqText)
-    .subscribe( data =>   
+    .subscribe( chunk =>   
        {
         
-        this.queryDraft[1]=data.generated_text
-         // this.queryDraft.push(data.generated_text)
-          const generatedText = data.generated_text;
-          //  this.animateText(data.generated_text, 0); // Start animating the text
+
+          this.state = false;
+          this.queryDraft[1]=chunk.partialText
     
        }
      );
@@ -164,7 +163,7 @@ proceedToNext(n:number){
     this.selectedContent.res=""
     this.specific ="";
     this.getScrollable()
-  } })  : ""//this.getQueryResponse1();
+  } })  : this.getQueryResponse1();
 }
 getScrollable(){
   const scrollableElement:any = document.getElementById('scrollableElement');

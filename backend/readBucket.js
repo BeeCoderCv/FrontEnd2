@@ -1,16 +1,18 @@
 const {Storage}=require ("@google-cloud/storage")
+var env =require('dotenv').config();
 const bucketName = 'storage-awarri_llm';
 const fs = require('fs');
 
 // Specify the path to the JSON file
 const filePath = 'data.json';
 var cat= [];
+const secretKey = process.env.SECRET_KEY;
 // Read the JSON file
 
 
 async function readBucket(bucketName, filename){
  const storage = new Storage({
-    keyFilename:'gpc.json', // Path to your service account key file
+    keyFilename:secretKey, // Path to your service account key file
   });
   var Context=null
 try{
@@ -62,7 +64,7 @@ const FilesArr=[
   'evaluation.json',
   'ranking.json'
 ]
-readBucket(bucketName,FilesArr[4])
+readBucket(bucketName,FilesArr[0])
 
 async function readCategory(bucketName, filename,res){
   const storage = new Storage({
