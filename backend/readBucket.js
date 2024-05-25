@@ -68,7 +68,7 @@ readBucket(bucketName,FilesArr[0])
 
 async function readCategory(bucketName, filename,res){
   const storage = new Storage({
-    keyFilename:'gpc.json', // Path to your service account key file
+    keyFilename:secretKey, // Path to your service account key file
   });
   var Context=null
 try{
@@ -99,7 +99,7 @@ const [Files]=await bucket.getFiles();
 
 async function readQuestion(bucketName, filename, category, arr,res){
   const storage = new Storage({
-    keyFilename:'gpc.json', // Path to your service account key file
+    keyFilename:secretKey, // Path to your service account key file
   });
   var Context=null;
   
@@ -132,7 +132,7 @@ const [Files]=await bucket.getFiles();
 
 async function uploadFile(bucketName, filePath, destinationFileName) {
     const storage = new Storage({
-        keyFilename:'gpc.json', // Path to your service account key file
+        keyFilename:secretKey, // Path to your service account key file
       });
       const bucket = await storage.bucket(bucketName)
       let existingData 
@@ -191,7 +191,7 @@ async function uploadFile(bucketName, filePath, destinationFileName) {
 async function doesFileExist(bucketName, fileName) {
   try {
     const storage = new Storage({
-      keyFilename:'gpc.json', // Path to your service account key file
+      keyFilename:secretKey, // Path to your service account key file
     });
     // Get a reference to the bucket
     const bucket = storage.bucket(bucketName);
