@@ -54,3 +54,5 @@ async function sendDataToFastAPIAndPrint (API_URL, data,res) {
 module.exports = {
     sendDataToFastAPIAndPrint: sendDataToFastAPIAndPrint,
   };
+
+  
